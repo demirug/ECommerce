@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 import dotenv
+import jinja2
+from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 dotenv.load_dotenv()
 
@@ -38,6 +40,44 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
+
+    {
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'NAME': 'jinja2',
+        'APP_DIRS': True,
+        'DIRS': ["markup/templates"],
+        'OPTIONS': {
+            'environment': 'shared.env.jinja2.environment',
+            'match_extension': '.jinja',
+            'newstyle_gettext': True,
+            'auto_reload': True,
+            'undefined': jinja2.Undefined,
+            'debug': True,
+
+            'filters': {},
+
+            'globals': {},
+
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+
+            'extensions': DEFAULT_EXTENSIONS,
+
+            "bytecode_cache": {
+                "name": "default",
+                "backend": "django_jinja.cache.BytecodeCache",
+                "enabled": True,
+            },
+        },
+    },
+
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
