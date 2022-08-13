@@ -64,6 +64,10 @@
 
             {% endfor %}
 
+            {% if breadcrumbs %}
+                {{ breadcrumbs }}
+            {% endif %}
+
             <div class="modal" id="mainModal" tabindex="-1">
               <div class="modal-dialog">
                 <div class="modal-content">
