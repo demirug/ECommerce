@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Test{% endblock %}</title>
+
+    <link href="{{  static("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{  static("css/style.css") }}" rel="stylesheet">
+
+    <script src="{{  static("js/popper.min.js") }}"></script>
+    <script src="{{  static("js/bootstrap.min.js") }}"></script>
+    <script src="{{ static("js/jquery-3.6.0.min.js") }}"></script>
+    <script src="{{ static("js/modal.js") }}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{{ static('favicon.ico') }}"/>
+
+    {% block head %}{% endblock %}
+
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+
+    <div class="page-container">
+        <div class="content-wrap">
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link" target="test" href="">test</a>
+                            </li>
+
+
+
+                  </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="" tabindex="-1" aria-disabled="true">{{ _("Account") }}</a>
+                        <a class="nav-link" href="" tabindex="-1" aria-disabled="true">{{ _("Logout") }}</a>
+                    {% else %}
+                        <a class="nav-link" href="" tabindex="-1" aria-disabled="true">{{ _("Login") }}</a>
+                    {% endif %}
+                </ul>
+
+                </div>
+              </div>
+            </nav>
+
+
+            {% for message in messages %}
+
+                <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            {% endfor %}
+
+            <div class="modal" id="mainModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                  </div>
+                  <div class="modal-body">
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+
+    <footer class="footer mt-auto py-3 bg-dark">
+          <div class="container" style="width: auto; max-width: 680px; padding: 0 15px;">
+                <hr>
+                <div style="text-align: center;">
+                    <a href="">TEST</a>
+                </div>
+          </div>
+    </footer>
+
+</body>
+</html>
