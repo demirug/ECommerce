@@ -8,6 +8,7 @@ django = "4.1"
 python-dotenv = "*"
 django-jinja = "*"
 django-debug_toolbar = "3.5.0"
+pillow = "*"
 
 [dev-packages]
 
