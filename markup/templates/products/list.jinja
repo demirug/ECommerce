@@ -1,0 +1,73 @@
+{% extends 'base.jinja' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+
+    <!-- Content -->
+    <div class="container mx-auto">
+        <div class="row mb-5"></div>
+        <div class="row">
+            {% if page_obj %}
+            {% for object in page_obj %}
+                <div class="col-md-auto">
+                    <div class="card mb-3" style="width: 20rem;">
+                    <img src="{{ object.get_image() }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ object.name }}</h5>
+                            <p class="card-text">Price: {{ object.price }}</p>
+                            <a href="{{ object.get_absolute_url() }}" class="btn btn-primary"><i class="fas fa-link"></i> {{ _("View") }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                <hr>
+                <center>
+                    <h5>{{ _("Animes not found") }}</h5>
+                </center>
+            {% endif %}
+        </div>
+    </div>
+    <!-- End content -->
+
+    <!-- Paginator -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav>
+      <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous() %}
+              <li class="page-item">
+               <a class="page-link" href="{{ path }}page={{ page_obj.previous_page_number() }}">{{ _("Previous") }}</a>
+              </li>
+          {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{{ _("Previous") }}</a>
+              </li>
+          {% endif %}
+
+          {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number|add(-1 - settings.paginator_pages_show) < i < page_obj.number|add(1 + settings.paginator_pages_show) %}
+                    {% if i == page_obj.number %}
+                        <li class="page-item page-link active">{{ i }}</li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="{{ path }}page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next() %}
+              <li class="page-item">
+               <a class="page-link" href="{{ path }}page={{ page_obj.next_page_number() }}">{{ _("Next") }}</a>
+              </li>
+          {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{{ _("Next") }}</a>
+              </li>
+          {% endif %}
+      </ul>
+    </nav>
+{% endif %}
+
+{% endblock body %}

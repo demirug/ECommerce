@@ -1,0 +1,79 @@
+{% extends 'base.jinja' %}
+
+{% block title %}{{ object.name }}{% endblock title %}
+
+{% block body %}
+
+    {% set images = object.images.all() %}
+
+    <div class="container">
+        <div class="row mb-5"></div>
+        <div class="row">
+            <div class="col-4">
+                <button data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <img src="{{ object.get_image() }}" class="img-thumbnail rounded" alt="">
+                </button>
+                <hr>
+                <p class="text-center">Price: {{ object.price }}</p>
+                <center>
+                    <button class="btn btn-primary">Add to cart</button>
+                </center>
+
+            </div>
+
+            <div class="col">
+                <h4 class="text-center">{{ object.name }}</h4>
+                <hr>
+                {{ object.description }}
+            </div>
+
+        </div>
+
+        <div class="row"></div>
+
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{ _("Images") }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{{ object.get_image() }}" class="d-block w-100">
+                  </div>
+                  {% for image in images %}
+                    <div class="carousel-item">
+                      <img src="{{ image.file.url }}" class="d-block w-100">
+                    </div>
+                  {% endfor %}
+              </div>
+
+             {% if images.count() > 1 %}
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">{{ _("Previous") }}</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">{{ _("Next") }}</span>
+              </button>
+            {% endif %}
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _("Close") }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock body %}
