@@ -14,9 +14,11 @@
                     <img src="{{ object.get_image() }}" class="img-thumbnail rounded" alt="">
                 </button>
                 <hr>
-                <p class="text-center">Price: {{ object.price }}</p>
+                <p class="text-center">Price: {{ object.price }}{{ currency_symbol }}</p>
                 <center>
-                    <button class="btn btn-primary">Add to cart</button>
+                    <form method="post">{% csrf_token %}
+                        <button class="btn btn-primary">Add to cart</button>
+                    </form>
                 </center>
 
             </div>

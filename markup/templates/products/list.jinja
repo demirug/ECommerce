@@ -13,7 +13,7 @@
                     <img src="{{ object.get_image() }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ object.name }}</h5>
-                            <p class="card-text">Price: {{ object.price }}</p>
+                            <p class="card-text">Price: {{ object.price }}{{ currency_symbol }}</p>
                             <a href="{{ object.get_absolute_url() }}" class="btn btn-primary"><i class="fas fa-link"></i> {{ _("View") }}</a>
                         </div>
                     </div>
