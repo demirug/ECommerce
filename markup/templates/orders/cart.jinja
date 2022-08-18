@@ -1,0 +1,62 @@
+{% extends 'base.jinja' %}
+
+{% block title %}{{ _("Cart") }}{% endblock title %}
+{% block head %}
+    <script src="{{ static("orders/js/cart.js") }}"></script>
+{% endblock %}
+{% block body %}
+{% csrf_token %}
+    <div class="container">
+        <div class="row mb-5"></div>
+          {% for product, count in cart.items()  %}
+            <div class="parent" product="{{ product.slug }}" price="{{ product.price }}">
+                <hr>
+                <div class="row">
+                    <div class="col-3">
+                        <img style="max-width: 100px; height: auto" src="{{ product.get_image() }}" alt="">
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ product.get_absolute_url() }}">{{ product.name }}</a>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-danger close">X</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="col-1">
+                        <input style="resize: horizontal; width: 50px;" type="number" min="1" value="{{ count }}">
+                    </div>
+                    <div class="col-1">
+                        <h5 class="price-field">{{ product.price * count }}</h5>
+                    </div>
+                    <div class="col-1">
+                        <h5>{{ currency_symbol }}</h5>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+
+        {% if cart.items() %}
+        <div class="row">
+            <div class="col-4">
+                <h3>{{ _("Total price") }}</h3>
+            </div>
+            <div class="col-3">
+                <h3 id="totalPrice">{{ totalPrice }}</h3>
+            </div>
+            <div class="col-1">
+                 <h3>{{ currency_symbol }}</h3>
+            </div>
+            <div class="col-3">
+                <a href="" class="btn btn-primary">{{ _("Confirm order") }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+
+{% endblock body %}
