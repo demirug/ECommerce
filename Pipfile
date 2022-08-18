@@ -9,6 +9,10 @@ python-dotenv = "*"
 django-jinja = "*"
 django-debug_toolbar = "3.5.0"
 pillow = "*"
+uuid = "*"
+requests = "*"
+aenum = "*"
+django-solo = "*"
 
 [dev-packages]
 
