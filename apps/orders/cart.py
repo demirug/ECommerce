@@ -74,7 +74,7 @@ class Cart:
         :return Products QuerySet
         """
         keys = set(self.cart_items.keys())
-        products = Product.objects.filter(pk__in=self.cart_items.keys(), active=True)
+        products = Product.objects.filter(pk__in=self.cart_items.keys(), enable=True)
         for product in products:
             keys.remove(str(product.pk))
             self.set(product, self.cart_items[str(product.pk)], False)
