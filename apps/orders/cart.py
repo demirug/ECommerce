@@ -82,6 +82,10 @@ class Cart:
             del self.cart_items[key]
         self.save()
 
+    def check_available(self):
+        products = Product.objects.filter(pk__in=self.cart_items.keys(), enable=True)
+        return all(product.count >= self.cart_items[str(product.pk)] for product in products)
+
     def clear(self):
         self.cart_items.clear()
         self.save()
