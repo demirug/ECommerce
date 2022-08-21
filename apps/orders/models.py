@@ -3,9 +3,12 @@ import uuid
 from django.conf import settings
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.orders.constants import OrderStatus
+from apps.orders.services.delivery.constants import DeliveryMethod
+from apps.orders.services.payment.constants import PaymentMethod
 from apps.products.models import Product
 
 
@@ -22,6 +25,14 @@ class Order(models.Model):
         RegexValidator(regex=r'^\+?1?\d{9,15}$',
                        message=_("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed"))],
         max_length=17, blank=True)
+
+    date = models.DateTimeField(default=timezone.now)
+
+    note = models.TextField(blank=True, default="")
+
+    payment_service = models.CharField(max_length=50, default=PaymentMethod.NONE.name)
+    delivery_service = models.CharField(max_length=50, default=DeliveryMethod.NONE.name)
+    track = models.CharField(max_length=999, default="")
 
     class Meta:
         verbose_name = _("Order")
