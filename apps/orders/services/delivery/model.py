@@ -8,7 +8,7 @@ class IDeliveryType:
         return ""
 
     def required_data(self) -> bool:
-        return False
+        return True
 
     def generate_document(self, order, data: str) -> str:
         return ""
