@@ -1,13 +1,21 @@
 {% extends 'base.jinja' %}
 
-{% block title %}{{ _("Cart") }}{% endblock title %}
+{% block title %}{{ _("Confirm") }}{% endblock title %}
 {% block head %}
-    <script src="{{ static("orders/js/cart.js") }}"></script>
+    <script src="{{ static("orders/js/confirm_delivery.js") }}"></script>
+
+    {% for path in delivery_js %}
+        {% if path != "" %}
+            <script src="{{ static(path) }}"></script>
+        {% endif %}
+    {% endfor %}
+
 {% endblock %}
 {% block body %}
-{% csrf_token %}
+
     <div class="container">
         <div class="row mb-5"></div>
+
           {% for product, count in cart.items()  %}
             <div class="parent" product="{{ product.slug }}" price="{{ product.price }}">
                 <hr>
@@ -18,15 +26,12 @@
                     <div class="col-6">
                         <a href="{{ product.get_absolute_url() }}">{{ product.name }}</a>
                     </div>
-                    <div class="col-1">
-                        <button class="btn btn-danger close">X</button>
-                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-8"></div>
-                    <div class="col-1">
-                        <input style="resize: horizontal; width: 50px;" type="number" min="1" value="{{ count }}">
+                    <div class="col-7"></div>
+                    <div class="col-2">
+                        <h5>{{ count }} x {{ product.price }} {{ currency_symbol }} |</h5>
                     </div>
                     <div class="col-1">
                         <h5 class="price-field">{{ product.price * count }}</h5>
@@ -39,8 +44,8 @@
             </div>
         {% endfor %}
 
-        {% if cart.items() %}
         <div class="row">
+
             <div class="col-4">
                 <h3>{{ _("Total price") }}</h3>
             </div>
@@ -50,12 +55,17 @@
             <div class="col-1">
                  <h3>{{ currency_symbol }}</h3>
             </div>
-            <div class="col-3">
-                <a href="{{ url('orders:confirm') }}" class="btn btn-primary">{{ _("Confirm order") }}</a>
-            </div>
         </div>
-        {% endif %}
+        <div class="row">
+            <hr>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p() }}
+                <div id="delivery-options"></div>
+                <button class="btn btn-primary">{{ _("Submit") }}</button>
+            </form>
 
+        </div>
     </div>
 
 
