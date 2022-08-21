@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from apps.orders.constants import OrderStatus
-from apps.orders.services.delivery.constans import DeliveryMethod
+from apps.orders.services.delivery.constants import DeliveryMethod
 from apps.orders.services.payment.model import IPaymentType
 from apps.orders.signals import payment_done
 
