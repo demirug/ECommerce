@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import redirect, get_object_or_404
+from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView
 from django_jinja.views.generic import CreateView
@@ -10,6 +11,8 @@ from apps.orders.cart import Cart
 from apps.orders.forms import CartOperationForm, ConfirmModelForm
 from apps.orders.models import Order, OrderItem
 from apps.orders.services.delivery.constants import DeliveryMethod
+from apps.orders.services.payment.constants import PaymentMethod
+from apps.orders.services.payment.model import IPaymentType
 from apps.products.models import Product
 
 
@@ -92,3 +95,17 @@ class OrderCreateView(CreateView):
         self.cart.clear()
 
         return redirect("orders:pay", uuid=order.uuid)
+
+
+class PaymentView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.order: Order = get_object_or_404(Order, uuid=self.kwargs['uuid'])
+        self.payment: IPaymentType = PaymentMethod[self.order.payment_service].values[0]
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        return self.payment.handle_get(self.order, self.request)
+
+    def post(self, *args, **kwargs):
+        return self.payment.handle_post(self.order, self.request)
