@@ -14,6 +14,7 @@ $(document).ready(function() {
             },
             success: function (response) {
                 parent.remove()
+                update_total_price()
             }
 
         });
@@ -36,18 +37,25 @@ $(document).ready(function() {
                 let data = JSON.parse(response)
                 e.target.value = data['count']
                 price.text(data['price'])
-
-                var total = 0
-                $('.price-field').each(function(index) {
-                   total += Number($(this).text())
-                })
-
-                total_price.text(total)
-
-
+                update_total_price()
             }
         });
     })
+
+
+    function update_total_price() {
+        var total = 0
+        $('.price-field').each(function(index) {
+           total += Number($(this).text())
+        })
+
+        total_price.text(total)
+
+        if(total == 0) {
+            total_price.parents('.row').remove();
+        }
+
+    }
 
 
 })
