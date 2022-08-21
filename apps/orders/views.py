@@ -18,6 +18,7 @@ class CartTemplateView(TemplateView):
         PAYMENT_METHODS[0].handle_post(None, None)
         data = super().get_context_data(**kwargs)
         cart: Cart = Cart(self.request)
+        cart.updateQuantity()
         products = Product.objects.filter(pk__in=cart.cart_items.keys())
         data['cart'] = {product: cart.cart_items[str(product.pk)] for product in products}
         data['totalPrice'] = sum([product.price * cart.cart_items[str(product.pk)] for product in products])
