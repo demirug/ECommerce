@@ -16,6 +16,13 @@ CKEDITOR_CONFIGS = {
         ],
         'removePlugins': 'exportpdf, elementspath'
     },
+    'no-elements': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [],
+        'removePlugins': 'exportpdf, elementspath',
+        'autoParagraph': False,
+    }
+
 }
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
