@@ -26,9 +26,12 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'adminsortable2',
+    'ckeditor',
+    'ckeditor_uploader',
 
     'shared',
     'apps.menu',
+    'apps.textpage',
     'apps.products',
     'apps.orders',
 ]

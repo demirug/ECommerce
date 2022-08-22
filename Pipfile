@@ -14,6 +14,7 @@ requests = "*"
 aenum = "*"
 django-solo = "*"
 django-admin-sortable2 = "*"
+django-ckeditor = "*"
 
 [dev-packages]
 

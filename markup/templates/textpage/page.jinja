@@ -1,0 +1,12 @@
+{% extends 'base.jinja' %}
+
+{% block body %}
+    <center>
+        <h3>{{ object.name }}</h3>
+    </center>
+    <hr>
+    <div class="container">
+        {{ object.content|safe }}
+    </div>
+
+{% endblock body %}

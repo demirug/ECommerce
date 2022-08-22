@@ -3,8 +3,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.textpage.views import TextPageDetailView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path("page/<slug:slug>/", TextPageDetailView.as_view(), name="textpage"),
     path('', include(('apps.orders.urls', 'orders'))),
     path('', include(('apps.products.urls', 'products'))),
 ]
