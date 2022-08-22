@@ -2,7 +2,7 @@
 <html class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Test{% endblock %}</title>
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
 
     <link href="{{  static("css/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{  static("css/style.css") }}" rel="stylesheet">
@@ -33,9 +33,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                              <a class="nav-link" target="test" href="">test</a>
-                            </li>
+                        {% for object in menu %}
+                            {% if object.position == "HE" %}
+                                <li class="nav-item">
+                                  <a class="nav-link" target="{{ object.get_target_display() }}" href="{{ object.url }}">{{ object.name }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
 
 
 
@@ -88,7 +92,11 @@
           <div class="container" style="width: auto; max-width: 680px; padding: 0 15px;">
                 <hr>
                 <div style="text-align: center;">
-                    <a href="">TEST</a>
+                    {% for object in menu %}
+                        {% if object.position == "FO" %}
+                              <a target="{{ object.get_target_display() }}" href="{{ object.url }}">{{ object.name }}</a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
           </div>
     </footer>

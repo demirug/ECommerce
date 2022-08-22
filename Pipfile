@@ -13,6 +13,7 @@ uuid = "*"
 requests = "*"
 aenum = "*"
 django-solo = "*"
+django-admin-sortable2 = "*"
 
 [dev-packages]
 

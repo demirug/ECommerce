@@ -25,7 +25,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'debug_toolbar',
+    'adminsortable2',
+
     'shared',
+    'apps.menu',
     'apps.products',
     'apps.orders',
 ]
@@ -72,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'apps.menu.context_processors.menu',
                 'shared.context_processors.cart.cart_count',
             ],
 
