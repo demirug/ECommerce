@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'adminsortable2',
     'ckeditor',
     'ckeditor_uploader',
+    'solo',
 
     'shared',
     'apps.menu',
