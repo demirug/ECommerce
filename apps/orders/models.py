@@ -21,6 +21,7 @@ class Order(models.Model):
     first_name = models.CharField(_("First name"), max_length=100)
     second_name = models.CharField(_("Second name"), max_length=100)
     last_name = models.CharField(_("Last name"), max_length=100)
+    email = models.EmailField(_("Email"), default="")
     phone_number = models.CharField(validators=[
         RegexValidator(regex=r'^\+?1?\d{9,15}$',
                        message=_("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed"))],
