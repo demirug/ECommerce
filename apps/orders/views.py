@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.sites.models import Site
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
@@ -9,11 +10,12 @@ from django_jinja.views.generic import CreateView
 
 from apps.orders.cart import Cart
 from apps.orders.forms import CartOperationForm, ConfirmModelForm
-from apps.orders.models import Order, OrderItem
+from apps.orders.models import Order, OrderItem, OrderSettings
 from apps.orders.services.delivery.constants import DeliveryMethod
 from apps.orders.services.payment.constants import PaymentMethod
 from apps.orders.services.payment.model import IPaymentType
 from apps.products.models import Product
+from shared.services.email import send_email
 
 
 class CartTemplateView(TemplateView):
@@ -89,11 +91,29 @@ class OrderCreateView(CreateView):
         order.save()
 
         OrderItem.objects.bulk_create([
-             OrderItem(order=order, product=products.get(id=key), count=value)
-             for key, value in self.cart.cart_items.items()])
+            OrderItem(order=order, product=products.get(id=key), count=value)
+            for key, value in self.cart.cart_items.items()])
+
+        settings: OrderSettings = OrderSettings.get_solo()
+
+        items: str = ""
+
+        for product in products:
+            items += settings.item_format.format(
+                url="{site}{path}".format(site=Site.objects.get_current().domain, path=product.get_absolute_url()),
+                name=product.name,
+                image="{site}{path}".format(site=Site.objects.get_current().domain, path=product.get_image()),
+                price=product.price,
+                count=self.cart.cart_items[str(product.pk)],
+                totalPrice=self.cart.cart_items[str(product.pk)] * product.price
+            )
+
+        title: str = settings.new_order_mail_title.format(number=order.pk)
+        message: str = settings.new_order_mail.format(number=order.pk, total_price=order.cost, items=items)
+
+        send_email(order.email, title, message)
 
         self.cart.clear()
-
         return redirect("orders:pay", uuid=order.uuid)
 
 
