@@ -4,7 +4,6 @@ from django.shortcuts import render
 from apps.orders.constants import OrderStatus
 from apps.orders.services.delivery.constants import DeliveryMethod
 from apps.orders.services.payment.model import IPaymentType
-from apps.orders.signals import payment_done
 
 
 class CashOnDelivery(IPaymentType):
@@ -17,5 +16,6 @@ class CashOnDelivery(IPaymentType):
             obj.status = OrderStatus.PAYED
             obj.track = DeliveryMethod[obj.delivery_service].values[0].generate_document(obj, obj.track)
             obj.save()
+            from apps.orders.signals import payment_done
             payment_done.send(obj)
         return render(request, "orders/payment/cash_on_delivery.jinja")
