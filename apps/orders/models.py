@@ -8,8 +8,6 @@ from django.utils.translation import gettext_lazy as _
 from solo.models import SingletonModel
 
 from apps.orders.constants import OrderStatus
-from apps.orders.services.delivery.constants import DeliveryMethod
-from apps.orders.services.payment.constants import PaymentMethod
 from apps.products.models import Product
 
 
@@ -32,8 +30,8 @@ class Order(models.Model):
 
     note = models.TextField(blank=True, default="")
 
-    payment_service = models.CharField(max_length=50, default=PaymentMethod.NONE.name)
-    delivery_service = models.CharField(max_length=50, default=DeliveryMethod.NONE.name)
+    payment_service = models.CharField(max_length=50, default="NONE")
+    delivery_service = models.CharField(max_length=50, default="NONE")
     track = models.CharField(max_length=999, default="")
 
     class Meta:
@@ -75,6 +73,9 @@ class OrderSettings(SingletonModel):
                                                                         "<p>Price: {total_price}</p>" +
                                                                         "{track}" +
                                                                         "<p>With love your-site-name</p>")
+
+    novaposhta_weight = models.PositiveIntegerField(_("Parsel weight"), default=1)
+    novaposhta_description = models.CharField(_("Description"), max_length=36, default="Order #{number}")
 
     class Meta:
         verbose_name = "Order settings"
