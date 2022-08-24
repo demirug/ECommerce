@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from solo.models import SingletonModel
 
 from apps.orders.constants import OrderStatus
 from apps.orders.services.delivery.constants import DeliveryMethod
@@ -51,3 +52,32 @@ class OrderItem(models.Model):
     class Meta:
         verbose_name = "OrderItem"
         verbose_name_plural = "OrderItems"
+
+
+class OrderSettings(SingletonModel):
+    item_format = models.TextField(_("Item mail format"),
+                                   default="<a href='{url}'>{name}</a>" +
+                                           "<img src='{image}'/>" +
+                                           "<p>{count} x {price} {totalPrice}</p>" +
+                                           "<hr>")
+
+    new_order_mail_title = models.CharField(_("Title of email"), max_length=100, default="Order #{number} payed")
+    new_order_mail = models.TextField(_("New order email"), default="<h1>New order #{number}</h1>" +
+                                                                    "<p>Thanks for order</p>" +
+                                                                    "{items}" +
+                                                                    "<p>Price: {total_price}</p>" +
+                                                                    "<p>With love your-site-name</p>")
+
+    order_payed_mail_title = models.CharField(_("Title of email"), max_length=100, default="Order #{number} payed")
+    order_payed_mail = models.TextField(_("Order payed email"), default="<h1>Order #{number} payed</h1>" +
+                                                                        "<p>Your order payed</p>" +
+                                                                        "{items}" +
+                                                                        "<p>Price: {total_price}</p>" +
+                                                                        "{track}" +
+                                                                        "<p>With love your-site-name</p>")
+
+    class Meta:
+        verbose_name = "Order settings"
+
+    def __str__(self):
+        return ""
