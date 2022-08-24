@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'solo',
+    'django_filters',
+    'rest_framework',
+    'novaposhta_api',
 
     'shared',
     'apps.menu',
@@ -181,7 +184,6 @@ EMAIL_HOST_USER = os.getenv("EMAIL_LOGIN")
 EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("FROM_EMAIL")
 
-
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 
@@ -195,3 +197,7 @@ SITE_NAME = 'Test site'
 
 CURRENCY = "USD"
 CURRENCY_SYMBOL = "$"
+
+NOVAPOSHTA_KEY = os.getenv("NOVAPOSHTA_KEY")
+# From warehouse Ref
+NOVAPOSHTA_DEFAULT = os.getenv("NOVAPOSHTA_DEFAULT")

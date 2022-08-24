@@ -9,7 +9,7 @@ from apps.textpage.views import TextPageDetailView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-
+    path('api-np/', include(('novaposhta_api.api.urls', 'api-np'))),
 
     path("page/<slug:slug>/", TextPageDetailView.as_view(), name="textpage"),
     path("helper/", FeedbackFAQView.as_view(), name="helper"),
