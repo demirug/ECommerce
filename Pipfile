@@ -17,6 +17,7 @@ django-admin-sortable2 = "*"
 django-ckeditor = "*"
 celery = "*"
 django-redis = "*"
+eventlet = "*"
 
 [dev-packages]
 
