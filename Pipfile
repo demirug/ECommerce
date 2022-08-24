@@ -18,6 +18,8 @@ django-ckeditor = "*"
 celery = "*"
 django-redis = "*"
 eventlet = "*"
+djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 
