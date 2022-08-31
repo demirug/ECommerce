@@ -13,9 +13,8 @@ class CashOnDelivery(IPaymentType):
         return self.handle_post(obj, request)
 
     def handle_post(self, obj, request) -> HttpResponse:
-        if obj.status == OrderStatus.NEW:
-            obj.status = OrderStatus.PAYED
-            obj.track = DeliveryMethod[obj.delivery_service].values[0].generate_document(obj, obj.track)
-            obj.save()
-            payment_done.send(obj)
+        obj.status = OrderStatus.PAYED
+        obj.track = DeliveryMethod[obj.delivery_service].values[0].generate_document(obj, obj.track)
+        obj.save()
+        payment_done.send(obj)
         return render(request, "orders/payment/cash_on_delivery.jinja", {"track": obj.track})
