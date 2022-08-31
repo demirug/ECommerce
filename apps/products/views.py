@@ -1,6 +1,5 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic.edit import ProcessFormView
 from django_jinja.views.generic import ListView, DetailView
 
 from apps.orders.cart import Cart
@@ -15,7 +14,7 @@ class ProductListView(RemovePageMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Product.objects.filter(enable=True)
+        return Product.objects.filter(enable=True, count__gt=0)
 
 
 class ProductDetailView(BreadCrumbsMixin, DetailView):
@@ -28,7 +27,7 @@ class ProductDetailView(BreadCrumbsMixin, DetailView):
         return redirect("orders:cart")
 
     def get_queryset(self):
-        return Product.objects.filter(enable=True)
+        return Product.objects.filter(enable=True, count__gt=0)
 
     def get_breadcrumbs(self):
         return [('Home', reverse("products:list")), (self.object.name,)]
