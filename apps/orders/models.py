@@ -59,14 +59,18 @@ class OrderSettings(SingletonModel):
                                            "<p>{count} x {price} {totalPrice}</p>" +
                                            "<hr>")
 
-    new_order_mail_title = models.CharField(_("Title of email"), max_length=100, default="Order #{number} payed")
+    new_order_mail_title = models.CharField(_("Title for new order email"),
+                                            max_length=100, default="New order #{number}")
+
     new_order_mail = models.TextField(_("New order email"), default="<h1>New order #{number}</h1>" +
                                                                     "<p>Thanks for order</p>" +
                                                                     "{items}" +
                                                                     "<p>Price: {total_price}</p>" +
                                                                     "<p>With love your-site-name</p>")
 
-    order_payed_mail_title = models.CharField(_("Title of email"), max_length=100, default="Order #{number} payed")
+    order_payed_mail_title = models.CharField(_("Title for payed order email"),
+                                              max_length=100, default="Order #{number} payed")
+
     order_payed_mail = models.TextField(_("Order payed email"), default="<h1>Order #{number} payed</h1>" +
                                                                         "<p>Your order payed</p>" +
                                                                         "{items}" +
@@ -75,7 +79,7 @@ class OrderSettings(SingletonModel):
                                                                         "<p>With love your-site-name</p>")
 
     novaposhta_weight = models.PositiveIntegerField(_("Parsel weight"), default=1)
-    novaposhta_description = models.CharField(_("Description"), max_length=36, default="Order #{number}")
+    novaposhta_description = models.CharField(_("Description"), max_length=36, default="Order {number}")
 
     class Meta:
         verbose_name = "Order settings"
