@@ -3,12 +3,15 @@ import json
 from django.contrib.sites.models import Site
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import redirect, get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView
 from django_jinja.views.generic import CreateView
 
 from apps.orders.cart import Cart
+from apps.orders.constants import OrderStatus
 from apps.orders.forms import CartOperationForm, ConfirmModelForm
 from apps.orders.models import Order, OrderItem, OrderSettings
 from apps.orders.services.delivery.constants import DeliveryMethod
@@ -119,8 +122,12 @@ class OrderCreateView(CreateView):
 
 class PaymentView(View):
 
+    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.order: Order = get_object_or_404(Order, uuid=self.kwargs['uuid'])
+        if self.order.status != OrderStatus.NEW:
+            return redirect('products:list')
+
         self.payment: IPaymentType = PaymentMethod[self.order.payment_service].values[0]
         return super().dispatch(request, *args, **kwargs)
 
