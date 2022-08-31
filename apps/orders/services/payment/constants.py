@@ -1,6 +1,7 @@
 from aenum import MultiValueEnum
 from django.utils.translation import gettext_lazy as _
 
+from apps.orders.services.payment.liqpay import LiqPayDelivery
 from apps.orders.services.payment.model import IPaymentType
 from apps.orders.services.payment.nopayment import CashOnDelivery
 
@@ -8,6 +9,7 @@ from apps.orders.services.payment.nopayment import CashOnDelivery
 class PaymentMethod(MultiValueEnum):
     NONE = IPaymentType(enabled=False), "NONE"
     CASH_ON_DELIVERY = CashOnDelivery(), _("Cash on delivery")
+    LIQPAY = LiqPayDelivery(), _("LiqPay")
 
     @classmethod
     def choices(cls):
