@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.orders.models import Order
 from apps.orders.services.delivery.constants import DeliveryMethod
 from apps.orders.services.payment.constants import PaymentMethod
+from shared.mixins.forms import FormControlMixin
 
 
 class CartOperationForm(forms.Form):
@@ -14,7 +15,7 @@ class CartOperationForm(forms.Form):
     value = forms.IntegerField()
 
 
-class ConfirmModelForm(forms.ModelForm):
+class ConfirmModelForm(FormControlMixin, forms.ModelForm):
 
     payment_service = forms.CharField(widget=forms.Select(choices=PaymentMethod.choices()))
     delivery_service = forms.CharField(widget=forms.Select(choices=DeliveryMethod.choices()))
