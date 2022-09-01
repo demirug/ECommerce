@@ -2,6 +2,8 @@
 
 {% block title %}{{ _("Confirm") }}{% endblock title %}
 {% block head %}
+    <link href="{{ static("orders/css/select2.min.css") }}" rel="stylesheet" />
+    <script src="{{ static("orders/js/select2.min.js") }}"></script>
     <script src="{{ static("orders/js/confirm_delivery.js") }}"></script>
 
     {% for path in delivery_js %}
