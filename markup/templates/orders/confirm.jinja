@@ -60,11 +60,17 @@
         </div>
         <div class="row">
             <hr>
-            <form action="" method="post">
+            <form class="px-3 py-3 my-5" style="border: black 1px solid; border-radius: 10px" action="" method="post">
+                <center>
+                    <h3>{{ _("Delivery information") }}</h3>
+                </center>
+                <hr>
                 {% csrf_token %}
                 {{ form.as_p() }}
                 <div id="delivery-options"></div>
-                <button class="btn btn-primary">{{ _("Submit") }}</button>
+                <center>
+                    <button class="btn btn-primary">{{ _("Submit") }}</button>
+                </center>
             </form>
 
         </div>
