@@ -35,11 +35,10 @@ async function api_request(url) {
 }
 
 function addSelect(label, options, func, parent="#delivery-options") {
-      var select = $("<select>\n" +
+      var select = $("<select class='form-control'>\n" +
                             "<option disabled selected value>---</option>\n" +
                             options +
                             "</select>\n")
-
       $("#" + label + "-options").remove()
       var element = $("<p id='" + label + "-options'>\n<label>" + label + ":</label>\n").append(select).append("</p>")
 
@@ -50,6 +49,7 @@ function addSelect(label, options, func, parent="#delivery-options") {
       }
 
       $(parent).append(element)
+      select.select2();
 }
 
 async function addAreas() {

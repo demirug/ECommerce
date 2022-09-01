@@ -2,6 +2,8 @@
 
 {% block title %}{{ _("Confirm") }}{% endblock title %}
 {% block head %}
+    <link href="{{ static("orders/css/select2.min.css") }}" rel="stylesheet" />
+    <script src="{{ static("orders/js/select2.min.js") }}"></script>
     <script src="{{ static("orders/js/confirm_delivery.js") }}"></script>
 
     {% for path in delivery_js %}
@@ -58,11 +60,17 @@
         </div>
         <div class="row">
             <hr>
-            <form action="" method="post">
+            <form class="px-3 py-3 my-5" style="border: black 1px solid; border-radius: 10px" action="" method="post">
+                <center>
+                    <h3>{{ _("Delivery information") }}</h3>
+                </center>
+                <hr>
                 {% csrf_token %}
                 {{ form.as_p() }}
                 <div id="delivery-options"></div>
-                <button class="btn btn-primary">{{ _("Submit") }}</button>
+                <center>
+                    <button class="btn btn-primary">{{ _("Submit") }}</button>
+                </center>
             </form>
 
         </div>
