@@ -2,7 +2,7 @@ import json
 
 from django.contrib.sites.models import Site
 from django.http import HttpResponseBadRequest, HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -125,6 +125,8 @@ class PaymentView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.order: Order = get_object_or_404(Order, uuid=self.kwargs['uuid'])
+        if self.order.status == OrderStatus.PAYED:
+            return render(request, "orders/paid.jinja", {"object": self.order})
         if self.order.status != OrderStatus.NEW:
             return redirect('products:list')
 
