@@ -31,5 +31,5 @@ class ConfirmModelForm(FormControlMixin, forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ('cost', 'date', 'track', 'status')
+        fields = ('first_name', 'second_name', 'last_name', 'email', 'phone_number', 'note', 'payment_service', 'delivery_service', 'delivery_data')
 
