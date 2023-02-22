@@ -1,0 +1,46 @@
+{% extends 'base.jinja' %}
+
+{% block title %}{{ _("Order") }}{% endblock title %}
+{% block head %}
+    <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client}}&currency=USD"></script>
+{% endblock head %}
+{% block body %}
+
+    <center>
+        <div class="mx-5 my-5" style="border: 2px black solid">
+            <h4>PayPal payment</h4>
+            <hr>
+            <p>Order number #{{ object.id }}</p>
+            <p>To pay: {{ object.cost }}{{ currency_symbol }}</p>
+            <hr>
+            <div id="paypal-button-container"></div>
+        </div>
+    </center>
+
+    <script>
+      paypal.Buttons({
+        createOrder() {
+          return fetch(window.location.href, {
+            method: "post",
+          })
+          .then((response) => response.json())
+          .then((order) => order.id);
+        },
+
+        onApprove(data) {
+          fetch(window.location.href + "?capture", {
+            method: "post",
+          })
+          .then((response) => response.json())
+          .then((data) => {
+              if(data.status == "ERROR") {
+                alert("Payment error. Please contact administrator");
+              } else {
+                 location.reload();
+              }
+          });
+        }
+      }).render('#paypal-button-container');
+    </script>
+
+{% endblock body %}

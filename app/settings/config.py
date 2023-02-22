@@ -161,6 +161,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -206,3 +207,6 @@ NOVAPOSHTA_DEFAULT = os.getenv("NOVAPOSHTA_DEFAULT")
 LIQPAY_PUBLIC_KEY = os.getenv("LIQPAY_PUBLIC_KEY")
 LIQPAY_PRIVATE_KEY = os.getenv("LIQPAY_PRIVATE_KEY")
 LIQPAY_SANDBOX = True
+
+PAYPAL_CLIENT = os.getenv("PAYPAL_CLIENT")
+PAYPAY_PASSWORD = os.getenv("PAYPAL_PASSWORD")
