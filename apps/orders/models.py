@@ -31,6 +31,7 @@ class Order(models.Model):
     note = models.TextField(blank=True, default="")
 
     payment_service = models.CharField(max_length=50, default="NONE")
+    payment_data = models.CharField(max_length=999, null=True)
     delivery_service = models.CharField(max_length=50, default="NONE")
     track = models.CharField(max_length=999, default="")
 
